@@ -85,3 +85,6 @@ Use this macro to build the wheel for the project we are packaging.
 #### %pyvenv_install()
 
 Use this macro install the wheel we built into the RPM buildroot.
+
+
+## License: GPLv3+
