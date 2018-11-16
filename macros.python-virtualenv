@@ -1,0 +1,23 @@
+%__pyvenv %{buildroot}/opt/venvs/%{name}/bin/python3
+%__pyvenvpip3 %{buildroot}/opt/venvs/%{name}/bin/pip3
+%__pyvenv_root %{buildroot}/opt/venvs/%{name}
+
+%pyvenv_create() %{expand:\\\
+  mkdir -p %{buildroot}/opt/venvs/
+  CFLAGS="${CFLAGS:-${RPM_OPT_FLAGS}}" LDFLAGS="${LDFLAGS:-${RPM_LD_FLAGS}}"\\\
+  %{__python3} -m venv %{__pyvenv_root} %{?*}
+  %{__pyvenvpip3} install wheel $PYVENV_WHEEL_ARGS
+  sleep 1
+}
+
+%pyvenv_build() %{expand:\\\
+  
+  CFLAGS="${CFLAGS:-${RPM_OPT_FLAGS}}" LDFLAGS="${LDFLAGS:-${RPM_LD_FLAGS}}"\\\
+  %{__pyvenv} %{py_setup} %{?py_setup_args} bdist_wheel %{?*}
+  sleep 1
+}
+
+%pyvenv_install() %{expand:\\\
+  %{__pyvenvpip3} install -I dist/*.whl  $PYVENV_PIP_ARGS
+  find  %{__pyvenv_root} -type f -print0 | xargs -0 sed -i 's~%{buildroot}~~'
+}
