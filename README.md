@@ -1,10 +1,10 @@
-## Macros to help in Python packaing using Virtualenv
+## Macros to help in Python packaging using Virtualenv
 
 This is a small set of RPM macros to help in packaging Python applications along
 with virtualenv. This project is following the ideas from
 https://dh-virtualenv.readthedocs.io/en/1.0/
 
-The available macros will be updated regularly, right now we have very limit
+The available macros will be updated regularly, right now we have very limited
 macros.
 
 
