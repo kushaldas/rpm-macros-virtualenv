@@ -13,7 +13,7 @@ macros.
 ```
 
 # Use our interpreter for brp-python-bytecompile script
-%global __python /opt/venvs/%{name}/bin/python3
+%global __python %{__pyvenv_root}/bin/python3
 
 
 %prep
@@ -58,10 +58,10 @@ Remember to install all of the executable(s) installed under virtualenv into
 
 The following are the available macros/variables:
 
-#### %__pyvenv_root
+#### %__pyvenv\_root
 
 This points to the directory where the virtualenv has been created. Right now
-the default path is `/opt/venvs/projectname`.
+the default path is `/opt/venvs/<projectname>`.
 
 #### %__pyvenv
 

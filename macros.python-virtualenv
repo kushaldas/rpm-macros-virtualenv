@@ -1,17 +1,16 @@
-%__pyvenv %{buildroot}/opt/venvs/%{name}/bin/python3
-%__pyvenvpip3 %{buildroot}/opt/venvs/%{name}/bin/pip3
-%__pyvenv_root %{buildroot}/opt/venvs/%{name}
+%__pyvenv_root /opt/venvs/%{name}
+%__pyvenv %{buildroot}/%{__pyvenv_root}/bin/python3
+%__pyvenvpip3 %{buildroot}/%{__pyvenv_root}/bin/pip3
 
 %pyvenv_create() %{expand:\\\
-  mkdir -p %{buildroot}/opt/venvs/
+  mkdir -p %{buildroot}/%{__pyvenv_root}
   CFLAGS="${CFLAGS:-${RPM_OPT_FLAGS}}" LDFLAGS="${LDFLAGS:-${RPM_LD_FLAGS}}"\\\
-  %{__python3} -m venv %{__pyvenv_root} %{?*}
+  %{__python3} -m venv %{buildroot}/%{__pyvenv_root} %{?*}
   %{__pyvenvpip3} install wheel $PYVENV_WHEEL_ARGS
   sleep 1
 }
 
 %pyvenv_build() %{expand:\\\
-  
   CFLAGS="${CFLAGS:-${RPM_OPT_FLAGS}}" LDFLAGS="${LDFLAGS:-${RPM_LD_FLAGS}}"\\\
   %{__pyvenv} %{py_setup} %{?py_setup_args} bdist_wheel %{?*}
   sleep 1
@@ -19,5 +18,5 @@
 
 %pyvenv_install() %{expand:\\\
   %{__pyvenvpip3} install -I dist/*.whl  $PYVENV_PIP_ARGS
-  find  %{__pyvenv_root} -type f -print0 | xargs -0 sed -i 's~%{buildroot}~~'
+  find %{buildroot}/%{__pyvenv_root} -type f -print0 | xargs -0 sed -i 's~%{buildroot}~~'
 }

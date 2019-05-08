@@ -7,7 +7,7 @@
 
 
 # Use our interpreter for brp-python-bytecompile script
-%global __python /opt/venvs/%{name}/bin/python3
+%global __python %{__pyvenv_root}/bin/python3
 
 
 
